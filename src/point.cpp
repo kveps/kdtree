@@ -8,7 +8,7 @@ Point<T>::Point(std::vector<T> data) {
 		throw std::invalid_argument("Size of input data is zero");
 	}
 
-	m_data = data;
+	StoreEigenVector(data);
 }
 
 template<typename T>
@@ -22,7 +22,18 @@ void Point<T>::FillPoint(std::vector<T> data) {
 		throw std::invalid_argument("Size of input data is zero");
 	}
 
-	m_data = data;
+	StoreEigenVector(data);
+}
+
+template<typename T>
+Point<T>::StoreEigenVector(std::vector<T> data) { 
+	if(!data.size()) {
+		throw std::invalid_argument("Size of input data is zero");
+	}
+
+	for(unsigned int i = 0; i < data.size(); i++) {
+		m_data[i] = data[i];
+	}
 }
 
 template<typename T>
@@ -32,7 +43,7 @@ void Point<T>::PrintPoint() {
 }
 
 template<typename T>
-std::vector<T> Point<T>::GetPoint() {
+Eigen::Vector<T> Point<T>::GetPoint() {
 	return m_data;
 }
 
@@ -43,6 +54,11 @@ T Point<T>::GetPoint(int n) {
 	}
 
 	return m_data[n-1];
+}
+
+template<typename T>
+size_t Point<T>::GetPointDim() {
+	return m_data.size();	
 }
 
 template class Point<float>;

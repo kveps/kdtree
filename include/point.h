@@ -5,6 +5,8 @@
 #include <vector>
 #include <stdexcept>
 
+#include <Eigen/Core>
+
 namespace kdtrees {
 
 template<typename T>
@@ -15,11 +17,12 @@ class Point {
 		~Point();
 		void FillPoint(std::vector<T> data);
 		void PrintPoint();
-		std::vector<T> GetPoint();
+		Eigen::VectorX<T> GetPoint();
 		T GetPoint(int n);
+		size_t GetPointDim();
 
 	private:
-		std::vector<T> m_data;
+		Eigen::VectorX<T> m_data;
 };
 
 } // namespace kdtrees

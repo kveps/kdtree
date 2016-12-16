@@ -12,13 +12,12 @@ CsvFileParser::~CsvFileParser() {
 
 void CsvFileParser::ReadFile(std::string filename) {
 	std::ifstream file(filename.c_str());
+	std::vector<double> line_nums;
+	std::string cell;	
+	std::string line;
 
 	while(file) {
-		std::string line;
-		
 		while(std::getline(file, line)) {
-			std::vector<double> line_nums;
-			std::string cell;
 			std::stringstream line_stream(line);
 		
 			while(std::getline(line_stream, cell, ',')) {
