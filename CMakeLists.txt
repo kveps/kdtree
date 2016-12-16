@@ -22,7 +22,13 @@ include_directories(${EIGEN_INCLUDE_DIRS})
 include_directories(include)
 
 add_library(kdtrees
-	    	src/test.cpp)
+	    	src/point.cpp
+	    	src/csv_file_parser.cpp
+	    	)
 
 target_link_libraries(kdtrees ${LIBRARIES_LIST})
+
+add_executable(runTest src/test.cpp)
+target_link_libraries(runTest kdtrees)
+
 	
