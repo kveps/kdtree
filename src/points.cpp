@@ -16,10 +16,12 @@ template<typename T>
 Points<T>::Points(std::vector<std::vector<T>> data) { 
 	if(!data.size()) {
 		throw std::invalid_argument("Size of point list is zero");
+		exit(1);
 	}
 
 	if(!data[0].size()) {
 		throw std::invalid_argument("Dimension of point is zero");
+		exit(1);
 	}
 
 	m_data.resize(data.size(),data[0].size());
@@ -35,10 +37,12 @@ template<typename T>
 void Points<T>::FillPoints(std::vector<std::vector<T>> data) { 
 	if(!data.size()) {
 		throw std::invalid_argument("Size of point list is zero");
+		exit(1);
 	}
 
 	if(!data[0].size()) {
 		throw std::invalid_argument("Dimension of point is zero");
+		exit(1);
 	}
 
 	m_data.resize(data.size(),data[0].size());
@@ -57,14 +61,6 @@ void Points<T>::StoreEigenVector(std::vector<std::vector<T>> data) {
 }
 
 template<typename T>
-void Points<T>::AddPointToList(std::vector<T> point) {
-	m_data.resize(m_data.rows()+1, point.size());
-	for(unsigned int i = 0; i < point.size(); ++i) {
-		m_data(m_data.rows()-1,i) = point[i];
-	}
-}
-
-template<typename T>
 void Points<T>::PrintPoints() const {	
 	for(unsigned int i = 0; i < m_data.rows(); ++i) {
 		std::cout << "Point " << (i+1) << ": ";
@@ -79,6 +75,7 @@ template<typename T>
 void Points<T>::PrintPoint(int m) const {	
 	if(m >= m_data.rows()) {
 		throw std::invalid_argument("Input argument greater than size");
+		exit(1);
 	}
 	std::cout << "Point " << m << ": ";
 	for(unsigned int j = 0; j < m_data.cols(); ++j) {
@@ -96,6 +93,7 @@ template<typename T>
 typename Points<T>::Point Points<T>::GetPoint(unsigned int m) const {
 	if(m >= m_data.rows()) {
 		throw std::invalid_argument("Input argument greater than size");
+		exit(1);
 	}
 
 	return m_data.row(m);
@@ -105,10 +103,12 @@ template<typename T>
 T Points<T>::GetPointValAtIndex(unsigned int m, unsigned int n) const {
 	if(m >= m_data.rows()) {
 		throw std::invalid_argument("Input argument greater than size");
+		exit(1);
 	}
 
 	if(n >= m_data.cols()) {
 		throw std::invalid_argument("Input argument greater than size");
+		exit(1);
 	}
 
 	return m_data(m,n);
@@ -118,6 +118,7 @@ template<typename T>
 typename Points<T>::PointList Points<T>::GetColumn(unsigned int n) const {
 	if(n >= m_data.cols()) {
 		throw std::invalid_argument("Input argument greater than size");
+		exit(1);
 	}
 
 	std::cout << n << std::endl;

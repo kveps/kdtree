@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <queue>
+#include <memory>
 
 #include <points.h>
 #include <node.h>
@@ -19,9 +20,14 @@ class CsvFileHandler {
 		CsvFileHandler() {}
 		CsvFileHandler(std::string filename);
 		~CsvFileHandler();
-		Points<T> ReadPointsFromFile();
-		void WriteTreeToFile(const Node<T>* node);
-		void ReadTreeFromFile(Node<T>* temp);
+		void UpdateFileName(std::string filename);
+		void ReadPointsFromFile(PointsPtr<T> points);
+		void WriteTreeToFile(NodePtr<T> node,
+							 const PointsPtr<T> points);
+		void ReadTreeFromFile(std::vector<NodePtr<T>>& node_vec,
+							  PointsPtr<T> points);
+		void WriteNNSearchToFile(const std::vector<unsigned int> best_inds,
+								 const std::vector<T> best_dists);
 
 	private:
 		static const int NUM_NODE_ATTRIBUTES = 4;

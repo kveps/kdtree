@@ -3,25 +3,23 @@
 namespace kdtrees {
 
 template<typename T> 
-BuildKdTree<T>::BuildKdTree(const Points<T>* pts) 
+BuildKdTree<T>::BuildKdTree(NodePtr<T> root, const PointsPtr<T> s_pts) 
 :
-m_points(pts) {
-	if(!pts->GetPointsSize()) {
+m_root(root),
+m_s_points(s_pts) {
+	if(!s_pts->GetPointsSize()) {
 		throw std::invalid_argument("Size of points is zero");
 		exit(1);
 	}
 
-	m_num_points = pts->GetPointsSize();
-	m_dim_size = pts->GetPointDim();
-
-	m_root = new Node<T>;
+	m_num_points = s_pts->GetPointsSize();
+	m_dim_size = s_pts->GetPointDim();
 
 	InitTreeData();
 }
 
 template<typename T> 
-BuildKdTree<T>::~BuildKdTree() {
-	
+BuildKdTree<T>::~BuildKdTree() {	
 }
 
 template<typename T> 
@@ -37,13 +35,15 @@ void BuildKdTree<T>::InitTreeData() {
 	m_root->left = NULL;
 	m_root->right = NULL;
 	m_root->level = 0;
-
-	RecursivelyBuildTree(m_root);
 }
 
 template<typename T> 
-void BuildKdTree<T>::RecursivelyBuildTree(Node<T>* node) {
-	const unsigned int axis = node->level % m_dim_size;		
+void BuildKdTree<T>::RecursivelyBuildTree() {
+	RecursivelyBuildTree(m_root);
+}
+template<typename T> 
+void BuildKdTree<T>::RecursivelyBuildTree(NodePtr<T>& node) {
+	const unsigned int axis = GetAxis(node);		
 	const T median = GetMedianAlongAxis(node, axis);
 
 	node->axis = axis;
@@ -53,13 +53,13 @@ void BuildKdTree<T>::RecursivelyBuildTree(Node<T>* node) {
 		return;
 	}
 
-	Node<T>* left_child = new Node<T>;
-	Node<T>* right_child = new Node<T>;
+	NodePtr<T> left_child(new Node<T>);
+	NodePtr<T> right_child(new Node<T>);
 
 	for(unsigned int i = 0; i < (node->point_inds).size(); ++i) {
 		unsigned int point_list_index = (node->point_inds)[i];
 
-		if(m_points->GetPointValAtIndex(point_list_index, axis) <= median) {
+		if(m_s_points->GetPointValAtIndex(point_list_index, axis) <= median) {
 			(left_child->point_inds).push_back(point_list_index);
 		}
 		else {
@@ -83,12 +83,17 @@ void BuildKdTree<T>::RecursivelyBuildTree(Node<T>* node) {
 }
 
 template<typename T> 
-T BuildKdTree<T>::GetMedianAlongAxis(const Node<T>* node, 
+unsigned int BuildKdTree<T>::GetAxis(const NodePtr<T> node) const {
+	return node->level % m_dim_size;
+}  
+
+template<typename T> 
+T BuildKdTree<T>::GetMedianAlongAxis(const NodePtr<T> node, 
 									 const unsigned int axis) const {
 	std::vector<T> axis_values;
 	for(unsigned int i = 0; i < (node->point_inds).size(); ++i) {
 		unsigned int point_list_index = (node->point_inds)[i];
-		axis_values.push_back(m_points->GetPointValAtIndex(point_list_index,
+		axis_values.push_back(m_s_points->GetPointValAtIndex(point_list_index,
 														   axis));
 	}
 	std::sort(axis_values.begin(), axis_values.end());
@@ -101,16 +106,16 @@ void BuildKdTree<T>::PrintTree() const {
 }
 
 template<typename T> 
-void BuildKdTree<T>::PrintTree(const Node<T>* node) const {
+void BuildKdTree<T>::PrintTree(NodePtr<T> node) const {
 	if(node == NULL) {
 		return;
 	}
 
-	std::queue<const Node<T>*> node_q;
+	std::queue<NodePtr<T>> node_q;
 	node_q.push(node);
 
 	while(!node_q.empty()) {
-		const Node<T>* temp = node_q.front();
+		NodePtr<T> temp = node_q.front();
 		node_q.pop();
 
 		if(temp != NULL) {
@@ -122,9 +127,8 @@ void BuildKdTree<T>::PrintTree(const Node<T>* node) const {
 }
 
 template<typename T> 
-void BuildKdTree<T>::WriteTreeToFile() const {
-	CsvFileHandler<T> csv_writer("/home/karthik/kdtree/data/tree.csv");
-	csv_writer.WriteTreeToFile(m_root);
+void BuildKdTree<T>::WriteTreeToFile(CsvFileHandler<T>* csv_handler) const {
+	csv_handler->WriteTreeToFile(m_root, m_s_points);
 }
 
 template class BuildKdTree<float>;

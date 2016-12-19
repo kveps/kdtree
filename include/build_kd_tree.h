@@ -16,14 +16,17 @@ template<typename T>
 class BuildKdTree {
 	public:
 		BuildKdTree() {}
-		BuildKdTree(const Points<T>* pts);
+		BuildKdTree(NodePtr<T> root, const PointsPtr<T> s_pts);
 		~BuildKdTree();
 		void InitTreeData();
-		void RecursivelyBuildTree(Node<T>* node);
-		T GetMedianAlongAxis(const Node<T>* node, const unsigned int axis) const;
+		void RecursivelyBuildTree();
+		void RecursivelyBuildTree(NodePtr<T>& node);
+		unsigned int GetAxis(const NodePtr<T> node) const;
+		T GetMedianAlongAxis(const NodePtr<T> node, 
+							 const unsigned int axis) const;
 		void PrintTree() const;
-		void PrintTree(const Node<T>* node) const;
-		void WriteTreeToFile() const;
+		void PrintTree(NodePtr<T> node) const;
+		void WriteTreeToFile(CsvFileHandler<T>* csv_handler) const;
 
 	private:
 		static const int MAX_POINTS_PER_BIN = 5;
@@ -31,9 +34,9 @@ class BuildKdTree {
 		int m_dim_size;
 		int m_num_points;
 
-		const Points<T>* m_points;
+		const PointsPtr<T> m_s_points;
 
-		Node<T>* m_root;
+		NodePtr<T> m_root;
 };
 
 } // namespace kdtrees

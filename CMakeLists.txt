@@ -34,4 +34,10 @@ target_link_libraries(kdtrees ${LIBRARIES_LIST})
 add_executable(runTest src/run_test.cpp)
 target_link_libraries(runTest kdtrees)
 
+add_executable(runBuildKdTree src/run_build_kd_tree.cpp)
+target_link_libraries(runBuildKdTree kdtrees)
+
+add_executable(runNNSearch src/run_nn_search.cpp)
+target_link_libraries(runNNSearch kdtrees)
+
 	

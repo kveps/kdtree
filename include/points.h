@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <memory>
 #include <stdexcept>
 
 #include <eigen3/Eigen/Dense>
@@ -22,7 +23,6 @@ class Points {
 		~Points();
 		void FillPoints(std::vector<std::vector<T>> data);
 		void StoreEigenVector(std::vector<std::vector<T>> data);
-		void AddPointToList(std::vector<T> point);
 		void PrintPoints() const;
 		void PrintPoint(int m) const;
 		PointList GetPoints() const;
@@ -35,6 +35,9 @@ class Points {
 	private:
 		PointList m_data;
 };
+
+template<typename T>
+using PointsPtr = std::shared_ptr<Points<T>>;
 
 } // namespace kdtrees
 
