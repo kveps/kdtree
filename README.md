@@ -30,3 +30,5 @@ $ ./runTest ../config/params.cfg
 NOTE : Please execute files exactly as mentioned above
        else file paths may get messed up
 
+NOTE : Get writeup from the writeup folder
+
