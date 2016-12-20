@@ -7,6 +7,7 @@ videos/*
 !map/
 !include/
 !data/
+!config/
 
 !.gitignore
 !*.pdf
@@ -15,6 +16,7 @@ videos/*
 !*.txt
 !*.gif
 !*.csv
+!params.cfg
 
 CMakeCache.txt
 CMakeFiles
