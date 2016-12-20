@@ -27,8 +27,12 @@ $ ./runNNSearch ../config/params.cfg
 ## Run entire pipeline without writing tree to file
 $ ./runTest ../config/params.cfg
 
-NOTE : Please execute files exactly as mentioned above
-       else file paths may get messed up
+NOTE : 
 
-NOTE : Get writeup from the writeup folder
+1) Please execute files exactly as mentioned above
+   else file paths may get messed up
+
+2) Depends of Eigen library
+
+3) Get writeup from the writeup folder
 
