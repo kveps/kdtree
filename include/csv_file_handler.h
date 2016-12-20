@@ -1,6 +1,7 @@
 #ifndef CSV_FILE_HANDLER_H_
 #define CSV_FILE_HANDLER_H_
 
+// standard includes
 #include <iostream>
 #include <string>
 #include <vector>
@@ -9,14 +10,19 @@
 #include <queue>
 #include <memory>
 
+// project includes
 #include <points.h>
 #include <node.h>
+#include <params.h>
+#include <constants.h>
 
 namespace kdtrees {
 
+// \brief Handles read write operations of CSV files
 template<typename T>
 class CsvFileHandler {
 	public:
+
 		CsvFileHandler() {}
 		CsvFileHandler(std::string filename);
 		~CsvFileHandler();
@@ -30,7 +36,8 @@ class CsvFileHandler {
 								 const std::vector<T> best_dists);
 
 	private:
-		static const int NUM_NODE_ATTRIBUTES = 4;
+
+		// CSV filename
 		std::string m_filename; 
 };
 

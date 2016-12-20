@@ -1,20 +1,26 @@
 #ifndef TEST_H_
 #define TEST_H_
 
+// standard includes
 #include <iostream>
 #include <string>
 
+// project includes
 #include <points.h>
 #include <csv_file_handler.h>
 #include <build_kd_tree.h>
 #include <nearest_nbr_kd_tree.h>
 #include <node.h>
+#include <params.h>
+#include <constants.h>
 
 namespace kdtrees {
 
+// \brief Test class to individually test stuff
 class Test {
 	public:
-		Test();
+
+		Test(Params params);
 		~Test();
 		void TestPoint();
 		void TestFileParser();
@@ -23,10 +29,9 @@ class Test {
 		void TestFullPipeLine();
 	
 	private:
-		std::string m_sample_filename;
-		std::string m_query_filename;
-		std::string m_tree_filename;
-		std::string m_nn_filename;
+
+		// Params object
+		Params m_params;
 };
 
 } // namespace kdtrees

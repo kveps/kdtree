@@ -2,21 +2,25 @@
 
 namespace kdtrees {
 
+// \brief Constructing based on filename
 template<typename T>
 CsvFileHandler<T>::CsvFileHandler(std::string filename)
 :
 m_filename(filename) {
 }
 
+// \brief Destroymember variables
 template<typename T>
 CsvFileHandler<T>::~CsvFileHandler() {
 }
 
+// \brief Update filename
 template<typename T>
 void CsvFileHandler<T>::UpdateFileName(std::string filename) {
 	m_filename = filename;
 }
 
+// \brief Reads sample and query points
 template<typename T>
 void CsvFileHandler<T>::ReadPointsFromFile(PointsPtr<T> points) {
 	std::ifstream file(m_filename.c_str());
@@ -41,6 +45,7 @@ void CsvFileHandler<T>::ReadPointsFromFile(PointsPtr<T> points) {
 	points->FillPoints(points_list);
 }
 
+// \brief writes kd-tree to file
 template<typename T>
 void CsvFileHandler<T>::WriteTreeToFile(NodePtr<T> node, 
 										const PointsPtr<T> points) {
@@ -79,6 +84,8 @@ void CsvFileHandler<T>::WriteTreeToFile(NodePtr<T> node,
 	file.close();
 }
 
+// \brief Read tree from file for nearest
+// neighbour search
 template<typename T>
 void CsvFileHandler<T>::ReadTreeFromFile(std::vector<NodePtr<T>>& node_vec,
 										 PointsPtr<T> points) {
@@ -116,7 +123,7 @@ void CsvFileHandler<T>::ReadTreeFromFile(std::vector<NodePtr<T>>& node_vec,
 				}
 			}
 			else {
-				switch(count % NUM_NODE_ATTRIBUTES) {
+				switch(count % NumNodeAttributes) {
 					
 					case 0:
 						temp.reset(new Node<T>);
@@ -154,6 +161,8 @@ void CsvFileHandler<T>::ReadTreeFromFile(std::vector<NodePtr<T>>& node_vec,
 	file.close();
 }	
 
+// \brief Write results of the nearest
+// neighbour to a file
 template<typename T>
 void CsvFileHandler<T>::WriteNNSearchToFile(const std::vector<unsigned int>
 											best_inds,

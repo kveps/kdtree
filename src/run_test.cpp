@@ -1,18 +1,20 @@
+// standard includes
 #include <iostream>
 
-#include <points.h>
-#include <csv_file_handler.h>
-#include <build_kd_tree.h>
-#include <nearest_nbr_kd_tree.h>
-#include <node.h>
+// project includes
 #include <test.h>
 
-using namespace kdtrees;
+int main(int argc, char* argv[]){
+	// Params object
+	kdtrees::Params params;
 
-int main(){
+	// Read params from config file
+	kdtrees::utils::ReadParams(argv[1], params);
 
-	Test test;
+	// Construct test object
+	kdtrees::Test test(params);
 
+	// Test full pipeline
 	test.TestFullPipeLine();
 
 	return 0;

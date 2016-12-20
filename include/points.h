@@ -1,19 +1,24 @@
 #ifndef POINTS_H_
 #define POINTS_H_
 
+// standard includes
 #include <iostream>
 #include <vector>
 #include <memory>
 #include <stdexcept>
 
+// system includes
 #include <eigen3/Eigen/Dense>
 #include <eigen3/Eigen/Geometry>
 
 namespace kdtrees {
 
+// \brief Represents set of points (for e.g. sample data set)
+// and perform operations on top of it 
 template<typename T>
 class Points {
 	public:
+
 		typedef Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> PointList;
 		typedef Eigen::Matrix<T, 1, Eigen::Dynamic> Point;
 		
@@ -33,6 +38,7 @@ class Points {
 		unsigned int GetPointsSize() const;
 
 	private:
+
 		PointList m_data;
 };
 
